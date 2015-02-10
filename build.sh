@@ -32,9 +32,9 @@ echo "Going to $WORKSPACE/$NAME-$VERSION"
 NAME=`echo $NAME| tr '[:lower:]' '[:upper:]'`
 cd $WORKSPACE/$NAME
 # ATLAS wants you to run configure from a different subdirectory
+rm -rf MyObj
 mkdir MyObj
 cd MyObj
-rm -rf *
 # for now we have hard-coded version numbers here for lapack
 ../configure --shared --with-netlib-lapack-tarfile=/repo/src/lapack/3.5.0/lapack-3.5.0.tgz
 make
