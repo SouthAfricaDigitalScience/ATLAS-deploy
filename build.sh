@@ -31,6 +31,9 @@ tar xfj $SRC_DIR/$SOURCE_FILE -C $WORKSPACE
 echo "Going to $WORKSPACE/$NAME-$VERSION"
 NAME=`echo $NAME| tr '[:lower:]' '[:upper:]'`
 cd $WORKSPACE/$NAME
-ls
-./bootstrap --prefix=$SOFT_DIR
+# ATLAS wants you to run configure from a different subdirectory
+mkdir MyObj
+cd MyObj
+rm -rf *
+../configure --shared --with-netlib-lapack-tarfile=/repo/src/lapack/lapack-3.5.0.tgz
 make
