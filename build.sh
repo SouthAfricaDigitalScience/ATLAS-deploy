@@ -36,5 +36,5 @@ rm -rf MyObj
 mkdir MyObj
 cd MyObj
 # for now we have hard-coded version numbers here for lapack
-../configure --shared --with-netlib-lapack-tarfile=/repo/src/lapack/3.5.0/lapack-3.5.0.tar.gz
+../configure --prefix=$SOFT_DIR --shared --with-netlib-lapack-tarfile=/repo/src/lapack/3.5.0/lapack-3.5.0.tar.gz
 make
