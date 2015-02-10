@@ -29,7 +29,7 @@ ls -lht $SRC_DIR/$SOURCE_FILE
 echo "extracting the tarball"
 tar xfj $SRC_DIR/$SOURCE_FILE -C $WORKSPACE
 echo "Going to $WORKSPACE/$NAME-$VERSION"
-echo $NAME| tr '[:lower:]' '[:upper:]'
+NAME=`echo $NAME| tr '[:lower:]' '[:upper:]'`
 cd $WORKSPACE/$NAME
 ls
 ./bootstrap --prefix=$SOFT_DIR
