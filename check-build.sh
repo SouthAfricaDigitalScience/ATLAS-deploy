@@ -29,6 +29,6 @@ prepend-path LD_LIBRARY_PATH   $::env(ATLAS_DIR)/lib
 prepend-path GCC_INCLUDE_DIR   $::env(GMP_DIR)/include
 MODULE_FILE
 ) > modules/$VERSION
-
+echo hi !
 mkdir -p $LIBRARIES_MODULES/$NAME
 cp modules/$VERSION $LIBRARIES_MODULES/$NAME
