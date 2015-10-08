@@ -1,7 +1,8 @@
 #!/bin/bash -e
 SOURCE_FILE=${NAME}${VERSION}.tar.bz2
 module load ci
-module add gcc/4.8.2
+module add gcc/4.8.4
+module add lapack
 
 echo "REPO_DIR is "
 echo $REPO_DIR
