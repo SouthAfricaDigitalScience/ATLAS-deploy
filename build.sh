@@ -33,7 +33,7 @@ fi
 echo "extracting the tarball"
 tar xfj ${SRC_DIR}/${SOURCE_FILE} -C ${WORKSPACE}/${NAME}-${VERSION} --strip-components=1
 echo "Going to ${WORKSPACE}/$NAME-$VERSION"
-cd $WORKSPACE/$NAME
+cd ${WORKSPACE}/${NAME}-${VERSION}
 # ATLAS wants you to run configure from a different subdirectory
 mkdir build-${BUILD_NUMBER}
 cd build-${BUILD_NUMBER}
