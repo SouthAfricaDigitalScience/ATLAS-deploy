@@ -1,12 +1,15 @@
 #!/bin/bash -e
 . /etc/profile.d/modules.sh
-module load ci
+module load deploy
 module add  gcc/${GCC_VERSION}
 module add cmake
 module add lapack/3.5.0-gcc-${GCC_VERSION}
 
 cd $WORKSPACE/${NAME}-${VERSION}/build-${BUILD_NUMBER}
-make check
+echo "cleaning previous build"
+rm -rf *
+../configure --prefix=${SOFT_DIR}-gcc-${GCC_VERSION} --shared --with-netlib-lapack-tarfile=/repo/src/lapack/3.5.0/lapack-3.5.0.tar.gz
+make -j2
 
 echo $?
 make install
@@ -23,7 +26,7 @@ proc ModulesHelp { } {
 module-whatis   "$NAME $VERSION."
 # this could be done using toupper(name)
 setenv       ATLAS_VERSION       $VERSION
-setenv       ATLAS_DIR           /apprepo/$::env(SITE)/$::env(OS)/$::env(ARCH)/$NAME/$VERSION-gcc-$::env(GCC_VERSION)
+setenv       ATLAS_DIR           $::env(CVMFS_DIR)$::env(SITE)/$::env(OS)/$::env(ARCH)/$NAME/$VERSION-gcc-$::env(GCC_VERSION)
 
 prepend-path LD_LIBRARY_PATH   $::env(ATLAS_DIR)/lib
 prepend-path GCC_INCLUDE_DIR   $::env(ATLAS_DIR)/include

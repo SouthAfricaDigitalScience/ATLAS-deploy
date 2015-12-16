@@ -1,41 +1,42 @@
 #!/bin/bash -e
+. /etc/profile.d/modules.sh
 SOURCE_FILE=${NAME}${VERSION}.tar.bz2
 module load ci
-module add gcc/4.8.4
-module add lapack
+module add gcc/${GCC_VERSION}
+module add cmake
+module add lapack/3.5.0-gcc-${GCC_VERSION}
 
-echo "REPO_DIR is "
-echo $REPO_DIR
-echo "SRC_DIR is "
-echo $SRC_DIR
-echo "WORKSPACE is "
-echo $WORKSPACE
-echo "SOFT_DIR is"
-echo $SOFT_DIR
+# this is just to keep consistency with the other projects
+mkdir -p ${WORKSPACE}/${NAME}-${VERSION}
 
-mkdir -p $WORKSPACE
-mkdir -p $SRC_DIR
-mkdir -p $SOFT_DIR
+mkdir -p ${SRC_DIR}
+mkdir -p ${SOFT_DIR}
 
 #  Download the source file
 
-if [[ ! -s $SRC_DIR/$SOURCE_FILE ]] ; then
+if [ ! -e ${SRC_DIR}/${SOURCE_FILE}.lock ] && [ ! -s ${SRC_DIR}/${SOURCE_FILE} ] ; then
+  touch  ${SRC_DIR}/${SOURCE_FILE}.lock
   echo "seems like this is the first build - let's get the source"
   mkdir -p $SRC_DIR
-  wget $URL/$VERSION/$SOURCE_FILE -O $SRC_DIR/$SOURCE_FILE
+  wget http://downloads.sourceforge.net/project/math-atlas/Stable/${VERSION}/${SOURCE_FILE} -O ${SRC_DIR}/${SOURCE_FILE}
+  echo "releasing lock"
+  rm -v ${SRC_DIR}/${SOURCE_FILE}.lock
+elif [ -e ${SRC_DIR}/${SOURCE_FILE}.lock ] ; then
+  # Someone else has the file, wait till it's released
+  while [ -e ${SRC_DIR}/${SOURCE_FILE}.lock ] ; do
+    echo " There seems to be a download currently under way, will check again in 5 sec"
+    sleep 5
+  done
 else
-  echo "continuing from previous builds, using source at " $SRC_DIR/$SOURCE_FILE
+  echo "continuing from previous builds, using source at " ${SRC_DIR}/${SOURCE_FILE}
 fi
-ls -lht $SRC_DIR/$SOURCE_FILE
 echo "extracting the tarball"
-tar xfj $SRC_DIR/$SOURCE_FILE -C $WORKSPACE
-echo "Going to $WORKSPACE/$NAME-$VERSION"
-NAME=`echo $NAME| tr '[:lower:]' '[:upper:]'`
+tar xfj ${SRC_DIR}/${SOURCE_FILE} -C ${WORKSPACE}/${NAME}-${VERSION} --strip-components=1
+echo "Going to ${WORKSPACE}/$NAME-$VERSION"
 cd $WORKSPACE/$NAME
 # ATLAS wants you to run configure from a different subdirectory
-rm -rf MyObj
-mkdir MyObj
-cd MyObj
+mkdir build-${BUILD_NUMBER}
+cd build-${BUILD_NUMBER}
 # for now we have hard-coded version numbers here for lapack
-../configure --prefix=$SOFT_DIR --shared --with-netlib-lapack-tarfile=/repo/src/lapack/3.5.0/lapack-3.5.0.tar.gz
+../configure --prefix=${SOFT_DIR}-gcc-${GCC_VERSION} --shared --with-netlib-lapack-tarfile=/repo/src/lapack/3.5.0/lapack-3.5.0.tar.gz
 make
