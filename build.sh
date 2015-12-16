@@ -31,7 +31,7 @@ else
   echo "continuing from previous builds, using source at " ${SRC_DIR}/${SOURCE_FILE}
 fi
 echo "extracting the tarball"
-tar xfj ${SRC_DIR}/${SOURCE_FILE} -C ${WORKSPACE}/${NAME}-${VERSION} --strip-components=1
+tar xfj ${SRC_DIR}/${SOURCE_FILE} -C ${WORKSPACE}/${NAME}-${VERSION} --strip-components=1 --skip-old-files
 echo "Going to ${WORKSPACE}/$NAME-$VERSION"
 cd ${WORKSPACE}/${NAME}-${VERSION}
 # ATLAS wants you to run configure from a different subdirectory
