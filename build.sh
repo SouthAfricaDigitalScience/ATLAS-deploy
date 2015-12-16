@@ -4,7 +4,7 @@ SOURCE_FILE=${NAME}${VERSION}.tar.bz2
 module load ci
 module add gcc/${GCC_VERSION}
 module add cmake
-module add lapack/3.5.0-gcc-${GCC_VERSION}
+module add lapack/3.6.0-gcc-${GCC_VERSION}
 
 # this is just to keep consistency with the other projects
 mkdir -p ${WORKSPACE}/${NAME}-${VERSION}
@@ -38,5 +38,5 @@ cd $WORKSPACE/$NAME
 mkdir build-${BUILD_NUMBER}
 cd build-${BUILD_NUMBER}
 # for now we have hard-coded version numbers here for lapack
-../configure --prefix=${SOFT_DIR}-gcc-${GCC_VERSION} --shared --with-netlib-lapack-tarfile=/repo/src/lapack/3.5.0/lapack-3.5.0.tar.gz
+../configure --prefix=${SOFT_DIR}-gcc-${GCC_VERSION} --shared --with-netlib-lapack-tarfile=/repo/src/lapack/3.5.0/lapack-3.6.0.tar.gz
 make

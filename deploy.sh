@@ -3,12 +3,12 @@
 module load deploy
 module add  gcc/${GCC_VERSION}
 module add cmake
-module add lapack/3.5.0-gcc-${GCC_VERSION}
+module add lapack/3.6.0-gcc-${GCC_VERSION}
 
 cd $WORKSPACE/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 echo "cleaning previous build"
 rm -rf *
-../configure --prefix=${SOFT_DIR}-gcc-${GCC_VERSION} --shared --with-netlib-lapack-tarfile=/repo/src/lapack/3.5.0/lapack-3.5.0.tar.gz
+../configure --prefix=${SOFT_DIR}-gcc-${GCC_VERSION} --shared --with-netlib-lapack-tarfile=/repo/src/lapack/3.6.0/lapack-3.5.0.tar.gz
 make -j2
 
 echo $?

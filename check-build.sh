@@ -3,7 +3,7 @@
 module load ci
 module add  gcc/${GCC_VERSION}
 module add cmake
-module add lapack/3.5.0-gcc-${GCC_VERSION}
+module add lapack/3.6.0-gcc-${GCC_VERSION}
 
 cd $WORKSPACE/${NAME}-${VERSION}/build-${BUILD_NUMBER}
 make check
