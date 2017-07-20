@@ -23,7 +23,7 @@ proc ModulesHelp { } {
 module-whatis   "$NAME $VERSION."
 # this could be done using toupper(name)
 setenv       ATLAS_VERSION       $VERSION
-setenv       ATLAS_DIR           /apprepo/$::env(SITE)/$::env(OS)/$::env(ARCH)/$NAME/$VERSION-gcc-$::env(GCC_VERSION)
+setenv       ATLAS_DIR           /data/ci-build/$::env(SITE)/$::env(OS)/$::env(ARCH)/$NAME/$VERSION-gcc-$::env(GCC_VERSION)
 
 prepend-path LD_LIBRARY_PATH   $::env(ATLAS_DIR)/lib
 prepend-path GCC_INCLUDE_DIR   $::env(ATLAS_DIR)/include
